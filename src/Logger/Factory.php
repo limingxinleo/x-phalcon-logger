@@ -43,6 +43,14 @@ class Factory implements FactoryInterface
         return $logger;
     }
 
+    /**
+     * @desc   获取单例类
+     * @author limx
+     * @param string $name    日志名
+     * @param int    $type    日志类型 FILE...
+     * @param array  $context 配置
+     * @return mixed
+     */
     public function getLogger($name = 'info', $type = Sys::LOG_ADAPTER_FILE, $context = [])
     {
         $config = [$name, $type, $context];
@@ -51,6 +59,16 @@ class Factory implements FactoryInterface
             self::$instances[$key] = $this->getClient($name, $type, $context);
         }
         return self::$instances[$key];
+    }
+
+    /**
+     * @desc   返回实例数量
+     * @author limx
+     * @return int
+     */
+    public static function count()
+    {
+        return count(static::$instances);
     }
 
 }
