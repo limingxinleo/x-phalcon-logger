@@ -49,7 +49,7 @@ class Factory implements FactoryInterface
      * @param string $name    日志名
      * @param int    $type    日志类型 FILE...
      * @param array  $context 配置
-     * @return mixed
+     * @return \Phalcon\Logger\AdapterInterface
      */
     public function getLogger($name = 'info', $type = Sys::LOG_ADAPTER_FILE, $context = [])
     {

@@ -14,6 +14,7 @@ use Phalcon\Config;
 
 class TestCase extends UnitTestCase
 {
+    /** @var  Factory factory */
     public $factory;
 
     public function setUp()
@@ -23,6 +24,7 @@ class TestCase extends UnitTestCase
                 'logDir' => __DIR__ . '/../logs/',
             ],
         ]);
+
         $this->factory = new Factory($config);
     }
 }

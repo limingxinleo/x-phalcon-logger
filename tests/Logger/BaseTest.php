@@ -18,6 +18,7 @@ class BaseTest extends TestCase
     public function testSimple()
     {
         $logger = $this->factory->getLogger('info'); // new 1
+
         $logger->info('info');
         $logger = $this->factory->getLogger('error'); // new 2
         $logger->error('error');
