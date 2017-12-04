@@ -33,7 +33,14 @@ class Factory implements FactoryInterface
                 }
                 $dir = $this->config->application->logDir . $dir;
                 if (!is_dir($dir)) {
-                    mkdir($dir, 0777, true);
+                    try {
+                        mkdir($dir, 0777, true);
+                    } catch (\Exception $ex) {
+                        // 当并发新建日志目录时，如果已存在目录，则不抛出错误
+                        if (!is_dir($dir)) {
+                            throw new LoggerException($ex->getMessage(), $ex->getCode());
+                        }
+                    }
                 }
                 $file = $name . '.log';
                 $logger = new FileLogger($dir . "/" . $file);
