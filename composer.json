@@ -2,7 +2,7 @@
     "name": "limingxinleo/x-phalcon-logger",
     "description": "Phalcon Logger 工厂类",
     "type": "library",
-    "license": "Mit",
+    "license": "MIT",
     "authors": [
         {
             "name": "李铭昕",
