@@ -9,8 +9,9 @@
 namespace Xin\Phalcon\Logger;
 
 use Phalcon\Config;
-use Phalcon\Logger\Adapter\File as FileLogger;
+use Xin\Phalcon\Logger\Adapter\File as FileLogger;
 use Phalcon\Logger\Adapter;
+use Xin\Support\File;
 
 class Factory implements FactoryInterface
 {
@@ -33,14 +34,7 @@ class Factory implements FactoryInterface
                 }
                 $dir = $this->config->application->logDir . $dir;
                 if (!is_dir($dir)) {
-                    try {
-                        mkdir($dir, 0777, true);
-                    } catch (\Exception $ex) {
-                        // 当并发新建日志目录时，如果已存在目录，则不抛出错误
-                        if (!is_dir($dir)) {
-                            throw new LoggerException($ex->getMessage(), $ex->getCode());
-                        }
-                    }
+                    File::getInstance()->makeDirectory($dir, 0777, true, true);
                 }
                 $file = $name . '.log';
                 $logger = new FileLogger($dir . "/" . $file);
