@@ -1,5 +1,7 @@
 # X-Phalcon-Logger
 
+[![Build Status](https://travis-ci.org/limingxinleo/x-phalcon-logger.svg?branch=master)](https://travis-ci.org/limingxinleo/x-phalcon-logger)
+
 ## 安装
 ~~~
 composer require limingxinleo/x-phalcon-logger
