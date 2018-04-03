@@ -11,6 +11,7 @@ namespace Tests;
 use PHPUnit\Framework\TestCase as UnitTestCase;
 use Xin\Phalcon\Logger\Factory;
 use Phalcon\Config;
+use Xin\Support\File;
 
 class TestCase extends UnitTestCase
 {
@@ -19,12 +20,28 @@ class TestCase extends UnitTestCase
 
     public function setUp()
     {
+        File::getInstance()->deleteDirectory(LOG_PATH, true);
+
         $config = new Config([
             'application' => [
-                'logDir' => __DIR__ . '/../logs/',
+                'logDir' => LOG_PATH . '/',
             ],
         ]);
 
         $this->factory = new Factory($config);
+    }
+
+    public function getLines($file)
+    {
+        $handle = fopen($file, "r");
+        $result = [];
+        while (!feof($handle)) {
+            $buffer = fgets($handle, 4096);
+            if (!empty(trim($buffer))) {
+                $result[] = trim($buffer);
+            }
+        }
+        fclose($handle);
+        return $result;
     }
 }

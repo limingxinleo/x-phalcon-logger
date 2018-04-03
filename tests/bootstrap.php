@@ -7,3 +7,6 @@
 // | Author: limx <715557344@qq.com> <https://github.com/limingxinleo>
 // +----------------------------------------------------------------------
 require __DIR__ . '/../vendor/autoload.php';
+
+define("TESTS_PATH", __DIR__);
+define("LOG_PATH", dirname(__DIR__) . '/logs');

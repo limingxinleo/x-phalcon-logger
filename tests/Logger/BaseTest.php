@@ -17,12 +17,20 @@ class BaseTest extends TestCase
 {
     public function testSimple()
     {
+        $date = date('Ymd');
         $logger = $this->factory->getLogger('info'); // new 1
 
         $logger->info('info');
+        $this->assertTrue(is_dir(LOG_PATH . '/' . $date));
+        $logs = $this->getLines(LOG_PATH . '/' . $date . '/info.log');
+        $this->assertEquals(1, count($logs));
+
+
         $logger = $this->factory->getLogger('error'); // new 2
         $logger->error('error');
         $logger->info('error');
+        $logs = $this->getLines(LOG_PATH . '/' . $date . '/error.log');
+        $this->assertEquals(2, count($logs));
     }
 
 
@@ -33,6 +41,10 @@ class BaseTest extends TestCase
         ];
         $logger = $this->factory->getLogger('error', Sys::LOG_ADAPTER_FILE, $context); // new 3
         $logger->info('自定义文件夹');
+
+        $this->assertTrue(is_dir(LOG_PATH . '/test'));
+        $logs = $this->getLines(LOG_PATH . '/test/error.log');
+        $this->assertEquals(1, count($logs));
     }
 
     public function testFormatter()
