@@ -10,8 +10,13 @@ namespace Xin\Phalcon\Logger\Adapter;
 
 use Phalcon\Logger\Adapter\File as FileLogger;
 use Psr\Log\LoggerInterface;
+use Xin\Phalcon\Logger\Utils\LevelMapper;
 
 class File extends FileLogger implements LoggerInterface
 {
-
+    public function log($type, $message = null, array $context = null)
+    {
+        $type = LevelMapper::getInstance()->getLevel($type);
+        parent::log($type, $message, $context);
+    }
 }

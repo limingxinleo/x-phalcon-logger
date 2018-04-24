@@ -8,7 +8,9 @@
 // +----------------------------------------------------------------------
 namespace Tests\Cli;
 
+use Phalcon\Logger;
 use Phalcon\Logger\Formatter\Line;
+use Psr\Log\LogLevel;
 use Tests\TestCase;
 use Xin\Phalcon\Logger\Factory;
 use Xin\Phalcon\Logger\Sys;
@@ -62,5 +64,19 @@ class BaseTest extends TestCase
     public function testCount()
     {
         $this->assertTrue(3 === Factory::count());
+    }
+
+    public function testPsrLog()
+    {
+        $context = [
+            'dir' => 'test'
+        ];
+        $logger = $this->factory->getLogger('info', Sys::LOG_ADAPTER_FILE, $context); // new 3
+        $logger->log(LogLevel::DEBUG, 'debug {name}', ['name' => 'limx']);
+        $logger->log(Logger::DEBUG, 'debug {name}', ['name' => 'limx']);
+
+        $logs = $this->getLines(LOG_PATH . '/test/info.log');
+        $this->assertEquals(2, count($logs));
+        $this->assertEquals($logs[0], $logs[1]);
     }
 }
